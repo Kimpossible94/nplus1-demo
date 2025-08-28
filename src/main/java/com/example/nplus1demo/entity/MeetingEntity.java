@@ -23,8 +23,17 @@ public class MeetingEntity {
     @Builder.Default
     private List<ParticipantEntity> participants = new ArrayList<>();
 
+    @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ScheduleEntity> schedules = new ArrayList<>();
+
     public void addParticipant(ParticipantEntity participantEntity) {
         this.participants.add(participantEntity);
         participantEntity.setMeeting(this);
+    }
+
+    public void addSchedule(ScheduleEntity scheduleEntity) {
+        this.schedules.add(scheduleEntity);
+        scheduleEntity.setMeeting(this);
     }
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class ParticipantEntity {
+public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
