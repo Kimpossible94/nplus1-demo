@@ -1,7 +1,8 @@
-package com.example.nplus1demo.entity;
+package com.example.nplus1demo.entity.base;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MeetingEntity {
 
     @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+//    @BatchSize(size = 100)
     private List<ScheduleEntity> schedules = new ArrayList<>();
 
     public void addParticipant(ParticipantEntity participantEntity) {

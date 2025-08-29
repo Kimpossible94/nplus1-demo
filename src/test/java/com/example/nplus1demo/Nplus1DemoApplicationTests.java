@@ -1,16 +1,14 @@
 package com.example.nplus1demo;
 
-import com.example.nplus1demo.entity.MeetingEntity;
-import com.example.nplus1demo.entity.ParticipantEntity;
-import com.example.nplus1demo.entity.ScheduleEntity;
-import com.example.nplus1demo.repository.MeetingRepository;
+import com.example.nplus1demo.entity.base.MeetingEntity;
+import com.example.nplus1demo.entity.base.ParticipantEntity;
+import com.example.nplus1demo.entity.base.ScheduleEntity;
+import com.example.nplus1demo.repository.base.MeetingRepository;
 import jakarta.transaction.Transactional;
-import org.hibernate.loader.MultipleBagFetchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.List;
 
@@ -113,33 +111,4 @@ class Nplus1DemoApplicationTests {
             System.out.println("=================================");
         }
     }
-
-    @Test
-    @DisplayName("fetch join 데이터 누락 테스트")
-    @Transactional
-    void fetchJoinDataMissingTest() {
-        saveMeetingDataWithParticipant();
-        saveMeetingData();
-
-        List<MeetingEntity> meetingEntities = meetingRepository.findAllWithParticipantsUsingJoinFetch();
-        System.out.println("left join fetch 적용 전 : " + meetingEntities.size());
-
-        System.out.println("====================================================");
-
-        List<MeetingEntity> leftMeetingEntities = meetingRepository.findAllWithParticipantsUsingLeftJoinFetch();
-        System.out.println("left join fetch 적용 후 : " + leftMeetingEntities.size());
-    }
-
-    @Test
-    @DisplayName("2개 이상의 OneToMany에서 fetch join 실패 확인")
-    void multipleOneToManyFetchJoinTest() {
-        saveMeetingDataWithParticipantAndSchedules();
-
-        assertThatThrownBy(() -> meetingRepository.findAllWithParticipantsAndSchedules())
-                .isInstanceOf(InvalidDataAccessApiUsageException.class)
-                .rootCause()
-                .isInstanceOf(MultipleBagFetchException.class);
-    }
-
-
 }

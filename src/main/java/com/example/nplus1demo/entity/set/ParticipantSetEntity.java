@@ -1,4 +1,4 @@
-package com.example.nplus1demo.entity;
+package com.example.nplus1demo.entity.set;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class ScheduleEntity {
+public class ParticipantSetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,5 +18,5 @@ public class ScheduleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meeting_id")
-    private MeetingEntity meeting;
+    private MeetingSetEntity meeting;
 }
